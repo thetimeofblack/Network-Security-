@@ -193,18 +193,33 @@ Ransomware is a type of malicious software from cryptovirology that threatens to
 More advanced malware used a technique to encrypt the victim’s files, making them inaccessible, and demands a ransom payment to decrypt them. 
 
 14)	Provide a sequence of steps that leads to a Persistent Cross-Site Scripting attack.  
+Persistent attack 
+there is a threat that users can leave comments and the comments can be seen by all users. 
+attacker does not only enter plain text, but also javascript code 
+the javascript code is stored on the server side in DB if it is not prevented 
+one user open the website and the script is delivered to the user on web page access. 
+
+reflected attack 
+user is an administrator of a company network and has several cookies stored in his browser 
+He receives e-mail from attacker 
+the e-mail claims that something is wrong with company webpage 
+e-mail contains a link to the webpage including some javascript code  like http://www.example.com/?search = <script type="text/javascript"> XSS problem </script>
+the consequence is that attacker can take over the session. 
 
 15)	How does SQL injection work?  
-SQL statements unexpected in GUI input fields
-Dangerous if not checked
-Attacker can try to put database queries
+
+there is input field on the website 
+attacker inputs normal information followed by the character ; plus meaning in SQL(another command) 
+i.e. Lubeck; select * from users ; 
+the command is execuated on the server side and result is sent back to the client side. 
 
 16)	Which measures should be taken to protect oneself against XSS or injection?
-Cross-Site Scripting (XSS) definition 
-Aim to execute malicious script code to affect web site users 
-Typically via JavaScript 
-Enabled by nearly all browser users 
-Other contents (HTML, Flash, ActiveX, VBScript) abuse also possible  
+Server protection measures 
+check user input for script code 
+Client protection measures 
+deactivate javascript(hardly possible stupid solution tor browser)
+use add-ons like NoScript
+
 
 17)	Which methods are possible to detect Spam e-mails? 
 
@@ -214,6 +229,7 @@ Method to prevent
 2.  Check the subject line for common spam topics 
 3.  avoid opening untrusted link 
 
+methods 
 Content-based message encoding 
 keyword filtering rules
 email authentication rules 
@@ -253,6 +269,7 @@ Chapter 3: Network Protection
 1)	What are the reasons why many organizations structure their local area networks by using VLANs? 
 Separation of broadcast domains to reduce the traffic load 
 Security(in particular confidentiality) require so far mechanisms on Network Layer(in particular firewall)
+
 2)	Explain the difference between port-based VLANs, MAC-based VLANs, and IP-based VLANs. 
 Port-based VLANs
 MAC-based VLANS
@@ -311,6 +328,7 @@ Firewall can be used for preventing ARP spoofing attack by using specific rules 
 10)	How should a firewall and a bastion host be configured? 
 A bastion host is a special purpose computer on a network specifically designed and configured to withstand attack. The computer generally hosts a single application, for example a proxy server, and all other services are removed or limited to reduce the threat to the computer. 
 It is hardened in this manner primarily due to its location and purpose, which is either on the outside of a firewall or in a demilitarized zone and usually involves access from untrusted networks or computers. 
+
 11)	What is the difference between network-based sensors (NIDS) and host-based sensors (HIDS)? 
 Network-based sensors NIDS
 Monitors all network traffic at central network locations 
@@ -406,9 +424,11 @@ SNMP community strings are used only by devices which support SNMPv1 and SNMPv2 
 
 
 23)	Which are the major differences between the SNMP versions 1, 2 and 3? 
+
 SNMP v1 and SNMPv2 contain only limited security mechanisms 
 There is no encrypted message and no participant authentication
 SNMPv1 and SNMPv2 are used for monitoring, but not for administration of managed devices 
+
 In SNMPv3 a completely different new architecture is specified 
 Security in SNMPv3 
 Authentication via username/password or key 
@@ -432,6 +452,7 @@ Conclusion
 Active network monitoring injects extra traffic into the network, which may influence the performance of the network. 
 Passive network monitoring is far less resource-intensive but does not pull real-time information from your network hardware. 
 Passive monitoring techniques typically require specialized devices in order to measure traffic, so the economy commitment could be higher than that of active monitoring. 
+
 Chapter 4: Security Protocols and VPNs 
 1)	Which different kinds of VPNs do you know? 
 Intranet VPN Site-To-Site VPN 
@@ -539,6 +560,7 @@ https means that the data from the input line is encrypted during the process of
 
 16)	How are symmetric and asymmetric ciphers combined in the TLS implementation? 
 SSL and TLS use a combination of symmetric and asymmetric encryption to ensure message privacy. During the SSL or TLS handshake, the SSL or TLS client and server agree an encryption algorithm and a shared key to be used for one session only. 
+
 17)	Compare IPsec and SSL/TLS by showing commonalities and differences. Discuss also advantages and disadvantages. 
 Commonalities Client and server authentication 
 Securing of confidentiality, integrity and authenticity (but on different layers)
@@ -569,6 +591,7 @@ SSL/TLS works only for TCP-based applications
 Configuration is needed for each application required 
 End system protection is needed  
 certificate trustworthiness is concerned difficult  
+
 18)	A company has sales people who are often negotiating contracts with the customers during visits at the customer sites. During these negotiations they need to get access to servers within the company. Discuss whether a realization via IPsec or SSL/TLS is preferable. 
 IPsec and SSL/TLS both have Client and server authentication
 Securing of confidentiality, integrity and authenticity( but on different layers)
