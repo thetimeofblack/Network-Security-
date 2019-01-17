@@ -83,32 +83,48 @@ Risk of a threat is the likelihood of the event and the potential impact. This c
 
 Chapter 2: Attacks on Networks 
 1)	Provide examples of attacks on different OSI layers. 
-OSI 1 physical layer infrastructure damage 
-OSI 2 data link layer ARP spoofing 
-OSI 3 network layer IP spoofing 
-OSI 4 transport layer SYN flooding 
-OSI 5 application layer XXS 
+OSI 1 physical layer(physical damage) infrastructure damage 
+OSI 2 data link layer(local communication) ARP spoofing, ARP Flooding, WLAN sniffing 
+OSI 3 network layer IP spoofing, Indirect scanning
+OSI 4 transport layer SYN flooding, illegal combination of TCP flags
+OSI 5 application layer Buffer overflows, Viruses, worms, Trojan horses, ransomware 
 
 2)	Differentiate between ARP spoofing, IP spoofing, and Caller ID spoofing.  
-ARP spoofing on OSI 2 data link layer router has wrong table to make information flow from 
-Victim to the attacker
-IP spoofing conceal real IP address of attacker to prevent from tracing 
-Caller ID spoofing 
+ARP spoofing Manipulation of MAC addresses,  man in the middle attack, attacker receives data from sender and forwards them to real destination.
+IP spoofing use of wrong IP address 
+Caller ID spoofing  use of wrong ID 
 
 3)	How does ARP spoofing in a switched Ethernet network work? 
-By cheating the router. Attack use IP spoofing to cheat router. Router has table to direct 
+Attacker spreads wrong ARP replies in the network 
+ARP replies contain MAC address of attacker 
+            IP address of router or user 
+Systems put wrong information from ARP reply into their ARP tables (Packets towards router or user IP address are forwarded to MAC address of attacker)
+Attacker reads data and forwards them 
+ARP spoofing procedure 
+1. Attacker sends ARP reply frame (intended for user)(contains the wrong source IP address the wrong one is router's ip address)  (which means attacker know the mac address in advance?)
+2. Attacker sends ARP reply frame (intended for router) (contains the wrong source IP address the wrong one is target's ip address)
+3. User sends IP packets to router in frame with attacker's MAC address 
+4. Router sends Ip packets to user in frame with attacker's MAC address 
 
 4)	How can DHCP be abused? 
+DHCP is used for automated provisioning of IP address, subnet mask, default gateway and DNS server 
+DHCP starvation 
 Attackers send many IP address requests to local
 DHCP server
 Use many different spoofed MAC addresses
 DHCP pool is limited, no addresses for real users left
+Rogue DHCP server 
+Attacker's computer behaves like DHCP server 
+Provides wrong configuration dta , in particular DNS server 
 
 5)	What is the meaning of a port scan? Is a port scan the real attack?
+port scan is to check ports one by one. 
 Port scan is used for attacker to make preparation for DOS 
 Directly connect to target server
 Check ports one by one for service
 Scanning is obvious
+no, it is not a real attack 
+It can prepare for the DOS attack. the attacker can know which port is open, so attacker can attack. 
  
 6)	How can a port scan be carried out without making the victim aware of the attacker’s IP address? Explain the steps. 
 1.	Attacker sends SYN segment to an unused port on proxy 
@@ -182,13 +198,17 @@ More advanced malware used a technique to encrypt the victim’s files, making t
 SQL statements unexpected in GUI input fields
 Dangerous if not checked
 Attacker can try to put database queries
+
 16)	Which measures should be taken to protect oneself against XSS or injection?
 Cross-Site Scripting (XSS) definition 
 Aim to execute malicious script code to affect web site users 
 Typically via JavaScript 
 Enabled by nearly all browser users 
 Other contents (HTML, Flash, ActiveX, VBScript) abuse also possible  
+
 17)	Which methods are possible to detect Spam e-mails? 
+
+
 Method to prevent 
 1.  Ensure you know and trust the sender before opening an email. 
 2.  Check the subject line for common spam topics 
@@ -212,6 +232,7 @@ Advertisement on web page can be rented. Attacker use advertisement to put malic
 Attacker collects knowledge which web sites are often used by victims.
 Attacker searches for vulnerabilities on these web sites.
 A found vulnerable web site is used to redirect the victim to a special site containing exploit code. 
+
 20)	Cars are often connected to the Internet nowadays. Discuss potential security threats. 
 Remote unlocking of doors 
 Takeover of control 
