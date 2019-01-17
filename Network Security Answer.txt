@@ -2,15 +2,23 @@
  
 Chapter 1: Introduction 
 1)	Explain the difference between safety and security. 
-Safety Detection and correction of disruptions that have an impact on the stability of operations
-In software safety is put at risk by programming mistakes 
-Security 
-Detection and protection against (often specific)attacks
-
+Safety： Detection and correction of disruptions that have an impact on the stability of operations
+	 In software safety is put at risk by programming mistakes 
+Security Detection and protection against (often specific)attacks
+difference safety is focused on the programming mistakes that can be used by the attackers.  
+	   security is focused on the method against the attack. 
 
 2)	Explain the IT security aims confidentiality, integrity, authenticity, availability, non-repudiation, and privacy. Give examples of situations where each aim is at risk and provide measures to ensure that each aim is achieved. 
 
-Confidentiality Prevention of unauthorized gaining of information
+aim Confidentiality Prevention of unauthorized gaining of information
+situation  Alice would like to give data to Bob, but it should not be made available to Carol. 
+measure to the situation  communication is done via files 
+Alice writes in a file
+Bob is allowed to read this file
+Bob writes data into another file 
+this file is readable for Carol 
+Carol gets the data   
+
 Measures 
 1.Data encryption 
 2.Rules for allowed/not allowed information flows 
@@ -19,8 +27,8 @@ Measures
 `In particular: confinement problem, i.e. hidden channels, side channels
 
 Integrity 
-Protection against unauthorized and
-unnoticed change of data
+Protection against unauthorized and unnoticed change of data
+Situation 
 Measures to ensure data integrity include
 1. Rules for allowed/not allowed data changes
  Who (subject) can modify a certain object (asset) in which
@@ -40,19 +48,22 @@ Measures
 4.	Procedure to proof the correctness of an identity 
 5.	Provisioning and check of certificates, credentials, tokens 
 6.	Challenge/response protocols: Question/answer procedures
-Availability Protection against undesired limitations of the use of functionality/services, etc
+
+Availability 
+Protection against undesired limitations of the use of functionality/services, etc
 Short term measures: Rules for recording and surveillance 
 Record which accesses on which objects happened when under which resource consumption 
-Specification of thresholds, e.g. for overload 
+Specification of thresholds(门槛), e.g. for overload 
 Remark: Rules means an obligation to act on violations (not like grants or forbids) 
 Longer term measures
 Add more resources, redundant structure
-Non-repudiation 
+
+Accountabiliy (Non-repudiation) 
 Protection against claims (not) to have done certain actions
 Measures: Specification of accountable actions 
 1.Linking of action with subject who performs the action: (digital) signature 
 2.Logging of actions and time stamps, log files on operations system level take note of security relevant actions 
-3.Capture proofs of action (e.g. for forensic analysis)
+3.Capture proofs of action (e.g. for forensic(法医的) analysis)
 
 Privacy 
 Protection of data related to a person
