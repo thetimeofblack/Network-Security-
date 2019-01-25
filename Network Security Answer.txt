@@ -97,7 +97,7 @@ Caller ID spoofing  use of wrong ID
 3)	How does ARP spoofing in a switched Ethernet network work? 
 Attacker spreads wrong ARP replies in the network 
 ARP replies contain MAC address of attacker 
-            IP address of router or user 
+IP address of router or user 
 Systems put wrong information from ARP reply into their ARP tables (Packets towards router or user IP address are forwarded to MAC address of attacker)
 Attacker reads data and forwards them 
 ARP spoofing procedure 
@@ -137,21 +137,58 @@ It can prepare for the DOS attack. the attacker can know which port is open, so 
  
   
 7)	How are DDoS attacks typically carried out? 
-By using bot network to request too much on server 
+By using bot network to consume all resources  
+carried out by many sources at the same time 
+
+smurf attack 
+ICMP echo request with wrong source Ip address ( spoofed by target server IP ) then broadcast the ICMP request. All server get the ICMP request  reply to target server 
+
+SYN flooding attack 
+attacker tries to establish TCP connection with wrong source IP address, so that the third step for ACK can not get reply because the Ip address does not 
+exist, which is a serious problem.  
+
+E-Mail storms to user 
+flooding of  inbox 
+Registration to many mailing lists 
+
+Buffer Overflow (example ping of death)
+IP packet bigger than allowed 2^16 bytes 
+send in a set of fragments 
+Reassembly consumes many resources on receiver (IP stack buffer)
+May lead to OS crash(affected former OSs WinNT, Linux)
 	
+Programming attack 
+Land attack 
+ 	set source address = destination address and source port = destination port 
+	system send packets to it self and CPU load =100% 
+Teardrop attack 
+       send fragments with wrong fragment offsets (overlapping fragments)
+       lead to system crash in some OS (WinNT , Linux 2.0)
+
+the previous attack can be used for each bot to attack a target server 
+attacker can control huge number of hosts used to attack a target server
 
 8)	Explain what bot nets are and how they are organized. For which purposes can bot nets be used? 
-Bot net is a number of internet-connected devices, each of which is running one or more bots. A tree structure can be used to organize the bot nets. Botnets can be used to perform distributed denial of-service attack, steal data, send spam and allows the attacker to access the device and its connection. 
+Bot net is a number of internet-connected devices, each of which is running one or more bots. A tree structure can be used to organize the bot nets but now bot nets work as 
+peer-to-peer networks. Botnets can be used to perform distributed denial of-service attack, steal data, send spam and allows the attacker to access the device and its connection. 
 
 9)	How can the TCP handshake procedure be abused for a DoS attack? Which countermeasures can be taken? 
 If the target server gets no replay , it will retransmit the SYN-ACK segments. This may consume all resources on a system. 
 Protection against SYN floods 
 Resource reservation on server after first SYN 
-	Resource reservation holds for 60s 
- Five retries lead to connection reestablishment. 
-
+Resource reservation holds for 60s 
+Five retries lead to connection reestablishment. 
+limit the request for the TCP handshake acknowledgement 
+push server ISN number into the ring buffer 
+reserve the resource for only after three-way handshake connection  
 Typically clients can initiate several 1000 connections. 
 Check for address spoofing 
+
+the possible steps for attacker to operate the bot nets 
+1.assumption that hosts have already been infected so that a bot net is active 
+2.attacker gives command to "command&control" server 
+3.Command&control server gives commands to all bots 
+4.Finally, bots carry out the attack
 
 10)	Explain how a DNS amplification attack works. 
 Public DNS servers answer DNS requests for anybody in recursive manner 
@@ -283,13 +320,11 @@ We can make decision whether packet is forwarded
 Allow Rule : forward packet 
 Deny Rule: drop packet 
 Reject Rule: drop packet + send ICMP notification back to source. 
-
 Packet filtering firewall is the process of passing or blocking packets at a network interface based on source and destination addresses , ports or protocols The process is used in conjunction with packet mangling and Network Address Translation(NAT). Packet filtering is often part of a firewall program for protecting a local network from unwanted intrusion. 
-
 Packet filtering is done by a program called a packet filter. The packet filter examines the header of each packet based on a specific set of rules, and on that basis, decides to prevent it from passing or allow it to pass. 
 
-4)	It should be possible to reach any web server (TCP port 80) in the Internet from an internal network (10.0.1.0/24). To allow for reasonable communication the web servers should be allowed to answer. Provide firewall rules including a default rule for specifying this in a suitable manner. 
-Packet from internal network(10.0.1.0/24) which is the source address and port number is 80 should be allowed. And packet whose destination address is (10.0.1.0/24) and port number is 80 and source address is arbitrary should also be allowed. Otherwise , other packets should be dropped.  
+4)   It should be possible to reach any web server (TCP port 80) in the Internet from an internal network (10.0.1.0/24). To allow for reasonable communication the web servers should be allowed to answer. Provide firewall rules including a default rule for specifying this in a suitable manner. 
+Packet from internal network(10.0.1.0/24) which is the source address and port number is 80 should be allowed. And packet whose destination address is (10.0.1.0/24) and port number is 80 and source address is arbitrary should also be allowed. Otherwise , other packets should be rejected.  
 
 5)	Which impact does the order of firewall rules have for the check of packets? How should the rules be ordered?  
 
@@ -303,9 +338,9 @@ Dynamic firewall rules are shown separately as a list on the Activity tab. The p
 Access from outside to DMZ is only allowed for selected services and hosts 
 Access from outside to inside is in general not allowed 
 Access from DMZ to inside is in general not allowed
-Access from DMZ to outside is in general not allowed 
-Access from inside to DMZ is not allowed 
-Access from inside to outside is not allowed 
+Access from DMZ to outside is  allowed for selected services and hosts
+Access from inside to DMZ is allowed in most cases. 
+Access from inside to outside is allowed 
 
 7)	Assume that there is a separation between internal network, DMZ and the Internet. Which kinds of connections (initiated from where?) should in general be possible and which ones should be blocked by packet filters? 
 Access from outside to inside is in general not allowed 
@@ -318,8 +353,8 @@ Useful functionality replies are allowed
 
 8)	Should servers in a company network be configured to reply to ICMP echo requests? Discuss advantages and disadvantages. 
 Servers should be configured to reply to ICMP echo requests 
-Advantages improve the availability of the server 
-Disadvantage increase the risk of DDOS, DOS 
+Advantages improve the availability of the server It is useful for diagnostic. 
+Disadvantage remote control your server through ICMP echo requests    
 
 9)	In which respect is there a relationship between a firewall and ARP spoofing? 
 Firewall can be used for preventing ARP spoofing attack by using specific rules on packet filter 
@@ -380,15 +415,13 @@ Chinese Walls Model (Hybrid Model)
 16)	Distinguish between the terms “verification” and “identification”. 
 Two authentication methods can be distinguished 
 Verification  user claims to be a certain person 
-				Comparison with reference data used to check it
+Comparison with reference data used to check it
 Identification data from an unknown person is compared with reference data from all persons
 
 17)	What is the purpose of MPLS and how is it related to circuit switching and packet switching? How does MPLS impact IP routing? 
-
 MPLS is a protocol-agnostic routing technique designed to speed up and shape traffic flows across enterprise wide area and service provider networks. 
 MPLS tries to combine the benefit of both the above switching technologies. It uses circuit switching within an ISP while packet switching is used within ISP’s. 
-
-MPLS requires each router to independently determine a packet’s next hop by inspecting the packet’s destination IP address before consulting its own routing table. This process consumes time and hardware resources, potentially resulting in degraded performance for real-time application such as voice and video. 
+MPLS requires each router to independently determine a packet’s next hop by inspecting the packet’s destination IP address before consulting its own routing table. This process consumes time and hardware resources, potentially resulting in degraded performance for real-time application such as voice and video.
 
 
 18)	Explain the terms “label edge router”, “label switch router”, “label switched path” and “forwarding equivalence class”. 
@@ -404,43 +437,44 @@ Management Information Base(MIB)
 Variable definitions are registered in the ISO registration tree 
 Nodes are identified by names and IDs 
 Leaves of the tree represent values in the managed objects
+these objects are not like java because it is simple. 
 
 
 20)	What is specific about an SNMP trap message in comparison to the other SNMP messages? 
 SNMP trap message 
 SNMP traps enable an agent to notify the management station of significant events by way of an unsolicited SNMP message. 
 The setup on the left shows a network management system that polls information and gets a response. The setup on the right slows an agent that sends an unsolicited or asynchronous trap to the network management system. 
+
+
 21)	Which transport protocol is the basis of SNMP? Explain this choice. Are there also disadvantages of this choice? 
-UDP 
+UDP  avoid the overhead of the TCP 
+one request and one response. too much effort to use TCP 
 Messages can get lost. 
+
 
 22)	What is the purpose of the “community string” in SNMP? Discuss it under security aspects. 
 The “SNMP Community string” is like a user id or password that allows access to a router’s or other device’s statistics.
 IP Check Server Monitor sends the community string along with all SNMP requests. 
 If the community string is correct, the device responds with the requested information 
 If the community string is incorrect, the device simply discards the request and do not respond. 
-
 SNMP community strings are used only by devices which support SNMPv1 and SNMPv2 protocol. SNMPv3 uses username/password and authentication, along with an encryption key. 
 
 
 23)	Which are the major differences between the SNMP versions 1, 2 and 3? 
-
 SNMP v1 and SNMPv2 contain only limited security mechanisms 
 There is no encrypted message and no participant authentication
 SNMPv1 and SNMPv2 are used for monitoring, but not for administration of managed devices 
-
 In SNMPv3 a completely different new architecture is specified 
 Security in SNMPv3 
 Authentication via username/password or key 
 Encryption of Messages using DES (Data Encryption Standard)
 Specification of user-based privileges 
 
-
-
 24)	A company network is strongly protected from the outside world. Its internal network should be managed via SNMP. Which version would you recommend? 
 Use SNMPv1 v2 
 Only user id and password is required to get information from managed devices. 
 The traffic in the network for SNMP is smaller than version3.
+effort for SNMP version3 is more. 
 
 25)	Explain the difference between active and passive network monitoring. 
 Active network monitoring 
@@ -488,7 +522,6 @@ Necessary to fill up last block with additional (random) bits
 Stream ciphers encryption of small plain text units 
 
 5)	What is the difference between electronic code book mode and cipher block chaining? 
-
 Electronic code book mode each plain text block is encrypted by the same key on its own
 Cipher block chaining each plain text block is XORed with previous cipher text block 
 
@@ -520,6 +553,7 @@ Certification history Data base of no longer valid certificates(for investigatio
    Time stamping  CA ties information to dates 
 Cross certification CA issues certificates about foreign CAs
 Attribute certificates Link attributes to an identity(e.g. rights, mandates)
+
 10)	Why is it necessary to check for certificate revocation? 
 Certificate revocation is needed if key is compromised 
 Certificate revocation lists : List of certificate IDs with dates of invalidity, digitally signed by CA
@@ -544,15 +578,19 @@ Symmetric encryption of IP packet or payload
 Tunnel mode AH authenticate whole IP packet 
 ESP encrypts IP header, payload and ESP trailer and authenticate ESP header, IP header ,  payload and ESP trailer
 Transport mode has less IP header    
+tunneling means you have the IP header and then there is another IP header put in front of it by the gateway router.
+new ip header contains the address of the gateway 
+tunnel IP packets is composed of two part one part is IP header used for tunnel between two gateway router to forwad packets. 
 
 
 13)	What is a replay attack and how is it prevented by IPsec? 
 A reply attack is a form of network attack in which a valid data transmission is maliciously or fraudulently repeated or delayed. This is carried out either by the originator or by an adversary who intercepts the data and re-transmits it , possibly as part of a masquerade attack by IP packet substitution. This is one of the lower tier versions of a “Man-in-the-middle attack”
 AH and ESP are used to prevent reply attack 
+sequence number can be used to prevent 
 
 
 14)	A company has two locations which are connected over the Internet. The company would like to make sure that there are no successful eavesdrops. Provide a useful configuration for this scenario based on IPsec. 
-use tunnel mode because the payload is encrypted. 
+use tunnel mode because the payload is encrypted and use ESP. 
 
 15)	What is the difference if there is https instead of http in the browser input line? 
 https means that the data from the input line is encrypted during the process of transmission. 
@@ -560,6 +598,8 @@ https means that the data from the input line is encrypted during the process of
 
 16)	How are symmetric and asymmetric ciphers combined in the TLS implementation? 
 SSL and TLS use a combination of symmetric and asymmetric encryption to ensure message privacy. During the SSL or TLS handshake, the SSL or TLS client and server agree an encryption algorithm and a shared key to be used for one session only. 
+asymmetric ciphers are used to change the key 
+during the session, we use the symmetric encryption. 
 
 17)	Compare IPsec and SSL/TLS by showing commonalities and differences. Discuss also advantages and disadvantages. 
 Commonalities Client and server authentication 
@@ -596,6 +636,9 @@ certificate trustworthiness is concerned difficult
 IPsec and SSL/TLS both have Client and server authentication
 Securing of confidentiality, integrity and authenticity( but on different layers)
 Strong cryptographic algorithms selectable 
+if you use browser to change contract, you can use SSL/TLS 
+if you have other application requring other lower layer techonology, you will have more effort to configure the simple application. 
+
 
 19)	What is the purpose of the SSH protocol? 
 Original purpose  replace insecure “remote-tools” to execute commands on remote computer 
@@ -605,5 +648,5 @@ Application is enhanced like SFTP, SCP
 
 
 20)	Why is it not sufficient to enable SSL/TLS in an e-mail client to ensure end-to-end confidentiality? What needs to be used instead? 
- SSL/TLS only has encryption to mail server and from mail server, but not end -to- end, which means that Plain text is on the mail servers and there is no encryption between mail servers 
-We need https on combination with SSL/TLS so that user can communicate only with encryption up to mail server. 
+ SSL/TLS only has encryption to mail server and from mail server, but not end -to- end, which means that Plain text is on the mail servers and there is no encryption between mail servers  (pretty good privacy).
+We need PGP on combination with SSL/TLS so that user can communicate only with encryption up to mail server. 
