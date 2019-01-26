@@ -200,10 +200,11 @@ Many large answers are sent to target server
 Conclusion : Attacker sends small requests to DNS which leads to relatively large answer
 
 11)	What is the potential impact if an attacker can place wrong DNS entries on DNS servers? Give an example scenario. 
-Attacker put wrong DNS entries on request to DNS servers
-DNS servers reply with answer of wrong information containing more bits 
-Request uses target IP address as source
-Target server get large amounts of wrong information.  
+Attacker put wrong DNS entries on DNS servers
+DNS servers reply with answer of wrong information to the target server 
+target server may redirect to the wrong address the attacker can manipulate 
+further manipulation can be done like fake website or response with large data traffic may happen. 
+
 
 12)	What is the difference between viruses, worms and Trojan horses? 
 Viruses 
@@ -304,13 +305,19 @@ Disadvantages it needs many steps to finish the whole work.
 
 Chapter 3: Network Protection 
 1)	What are the reasons why many organizations structure their local area networks by using VLANs? 
+the problem LAN topology follows physical configuration and is broadcast domain
+data traffic is (at least partially) visible for all end systems
+logical separations in a LAN can be used for user group isolation 
 Separation of broadcast domains to reduce the traffic load 
-Security(in particular confidentiality) require so far mechanisms on Network Layer(in particular firewall)
+Security(in particular confidentiality) require so far mechanisms on Network Layer(in particular firewall) to prevent attacker from eavesdropping
 
 2)	Explain the difference between port-based VLANs, MAC-based VLANs, and IP-based VLANs. 
-Port-based VLANs
-MAC-based VLANS
-IP-based VLANs
+Port-based VLANs    all end systems behind a port belonging to the VLAN
+MAC-based VLANs map MAC address with VLANs 
+	      connection of end system ot VLAN independent form switch port 
+	      needs more effort because of high configuration 
+IP-based VLANs violation of layering concept 
+	                 map IP address to the VLANs
 
 3)	Explain how the rules on a packet filter firewall look like.  
 Firstly we have key selection criteria to determine “true” and “false”.
@@ -338,7 +345,7 @@ Dynamic firewall rules are shown separately as a list on the Activity tab. The p
 Access from outside to DMZ is only allowed for selected services and hosts 
 Access from outside to inside is in general not allowed 
 Access from DMZ to inside is in general not allowed
-Access from DMZ to outside is  allowed for selected services and hosts
+Access from DMZ to outside is  in general not allowed 
 Access from inside to DMZ is allowed in most cases. 
 Access from inside to outside is allowed 
 
@@ -357,7 +364,8 @@ Advantages improve the availability of the server It is useful for diagnostic.
 Disadvantage remote control your server through ICMP echo requests    
 
 9)	In which respect is there a relationship between a firewall and ARP spoofing? 
-Firewall can be used for preventing ARP spoofing attack by using specific rules on packet filter 
+reference to the teacher's answer 
+
 
 
 10)	How should a firewall and a bastion host be configured? 
@@ -392,6 +400,7 @@ There is no information available on parallel attacks on other systems
 There are different ways of attack detection by IDS
 Some are available in commercial or open source IDS 
 Others are under test in academia 
+
 13)	Provide a drawing of a network with a DMZ and show useful locations of HIDS and NIDS. 
 
 HIDS host-based IDS 
@@ -563,7 +572,7 @@ Complete
 Efficient 
 
 11)	Map the protocols IPsec, SSL/TLS and SSH to the OSI model. 
-IPsec OSI layer 3 
+IPsec OSI layer 3  network layer 
 SSL secure sockets layer version 1,2,3 OSI layer 4.5 between transport layer and application layer
 TLS Transport Layer Security OSI layer 4 
 	    SSH secure shell application layer OSI layer 5 
@@ -641,10 +650,12 @@ if you have other application requring other lower layer techonology, you will h
 
 
 19)	What is the purpose of the SSH protocol? 
+The secure Shell protocol is a protocol for secure remote login and other sercure network sevices over an insecure network. 
 Original purpose  replace insecure “remote-tools” to execute commands on remote computer 
 It also can be used for tunneling of applications (port forwarding) 
 It is useful for small VPNs 
 Application is enhanced like SFTP, SCP 
+
 
 
 20)	Why is it not sufficient to enable SSL/TLS in an e-mail client to ensure end-to-end confidentiality? What needs to be used instead? 
